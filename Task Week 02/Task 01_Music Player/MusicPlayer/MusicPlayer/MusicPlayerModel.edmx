@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MusicPlayerdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ErrorLogMaster">
+          <Key>
+            <PropertyRef Name="ErrorID" />
+          </Key>
+          <Property Name="ErrorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ErrorMessage" Type="varchar(max)" />
+          <Property Name="ErrorDateTime" Type="datetime" />
+          <Property Name="UserName" Type="varchar(max)" />
+          <Property Name="ControllerName" Type="varchar(max)" />
+          <Property Name="MethodName" Type="varchar(max)" />
+          <Property Name="InnerErrorMessage" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Music">
+          <Key>
+            <PropertyRef Name="MusicID" />
+          </Key>
+          <Property Name="MusicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusicTitle" Type="nvarchar(max)" />
+          <Property Name="MusicFilePath" Type="nvarchar(max)" />
+          <Property Name="MusicCategory" Type="nvarchar(max)" />
+          <Property Name="MusicStatus" Type="nvarchar(max)" />
+          <Property Name="MusicImage" Type="nvarchar(max)" />
+          <Property Name="SingerName" Type="nvarchar(max)" />
+          <Property Name="MusicLike" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserPassword" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="EditBy" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityContainer Name="MusicPlayerdbModelStoreContainer">
+          <EntitySet Name="ErrorLogMaster" EntityType="Self.ErrorLogMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Music" EntityType="Self.Music" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MusicPlayerdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ErrorLogMaster">
+          <Key>
+            <PropertyRef Name="ErrorID" />
+          </Key>
+          <Property Name="ErrorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ControllerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MethodName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="InnerErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="MusicPlayerdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ErrorLogMasters" EntityType="Self.ErrorLogMaster" />
+          <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+          <EntitySet Name="Musics" EntityType="MusicPlayerdbModel.Music" />
+        </EntityContainer>
+        <EntityType Name="Music">
+          <Key>
+            <PropertyRef Name="MusicID" />
+          </Key>
+          <Property Name="MusicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusicTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MusicFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MusicCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MusicStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MusicImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SingerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MusicLike" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MusicPlayerdbModelStoreContainer" CdmEntityContainer="MusicPlayerdbEntities">
+          <EntitySetMapping Name="ErrorLogMasters">
+            <EntityTypeMapping TypeName="MusicPlayerdbModel.ErrorLogMaster">
+              <MappingFragment StoreEntitySet="ErrorLogMaster">
+                <ScalarProperty Name="ErrorID" ColumnName="ErrorID" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ErrorDateTime" ColumnName="ErrorDateTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+                <ScalarProperty Name="InnerErrorMessage" ColumnName="InnerErrorMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="MusicPlayerdbModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musics">
+            <EntityTypeMapping TypeName="MusicPlayerdbModel.Music">
+              <MappingFragment StoreEntitySet="Music">
+                <ScalarProperty Name="MusicLike" ColumnName="MusicLike" />
+                <ScalarProperty Name="SingerName" ColumnName="SingerName" />
+                <ScalarProperty Name="MusicImage" ColumnName="MusicImage" />
+                <ScalarProperty Name="MusicStatus" ColumnName="MusicStatus" />
+                <ScalarProperty Name="MusicCategory" ColumnName="MusicCategory" />
+                <ScalarProperty Name="MusicFilePath" ColumnName="MusicFilePath" />
+                <ScalarProperty Name="MusicTitle" ColumnName="MusicTitle" />
+                <ScalarProperty Name="MusicID" ColumnName="MusicID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,177 @@
+﻿
+@model MusicPlayer.Models.MusicPlayerModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .search-box {
+        position: relative;
+    }
+
+        .search-box input {
+            padding-left: 35px;
+            border-radius: 8px;
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 14px;
+        }
+</style>
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4 id="greeting" class="mt-3 mb-2">Upload Music!</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-5 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Music Player</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Upload Music</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <form id="musicForm" enctype="multipart/form-data">
+            <form id="musicForm" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-xl-12 col-lg-9 col-md-10 mx-auto">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-3">
+                                    <i class="la la-plus"></i> Upload Music
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Music Title</label>
+                                        @Html.TextBoxFor(model => model.MusicTitle, new { @class = "form-control input", placeholder = "Enter Music Title", required = "" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Singer Name</label>
+                                        @Html.TextBoxFor(model => model.SingerName, new { @class = "form-control input", placeholder = "Enter Singer Name", required = "" })
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Upload Music</label>
+                                        <input type="file" name="MusicFile" class="form-control" required />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Upload Music Image </label>
+                                        <input type="file" name="ImageFile" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Select  Music Category </label>
+                                        @Html.DropDownListFor(model => model.MusicCategory,
+     new List<SelectListItem>()
+         {
+         new SelectListItem { Text = "Select Music Category", Value = "" },
+         new SelectListItem { Text = "All", Value = "All" },
+         new SelectListItem { Text = "Pop", Value = "Pop" },
+         new SelectListItem { Text = "Electronic", Value = "Electronic" },
+         new SelectListItem { Text = "Classical", Value = "Classical" }
+         },
+         new { @class = "form-control", required = "" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary px-4">Upload Music</button>
+                </div>
+            </form>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function () {
+    $("#musicForm").submit(function (e) {
+        e.preventDefault(); // prevent default form submit
+
+        var formData = new FormData(this);
+
+        // Anti-forgery token
+        var token = $('input[name="__RequestVerificationToken"]').val();
+        formData.append("__RequestVerificationToken", token);
+
+        Swal.fire({
+            icon: "info",
+            title: "Working on it!",
+            text: "Please wait.",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        $.ajax({
+            url: '@Url.Action("Index","MusicPlayer")',
+            type: 'POST',
+            data: formData,
+            processData: false,  
+            contentType: false,  
+                success: function (res) {
+                    Swal.close();
+                    if (res.Status === "Success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Good Job!",
+                            text: res.Message,
+                            showConfirmButton: true
+                        }).then(() => {
+                            window.location.href = res.URL;
+                        });
+                    } else if (res.Status === "CatchError") {
+                        if (res.URL && res.URL !== "") {
+                            window.location.href = res.URL;
+                        }
+                    }
+                    else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error!",
+                            text: res.Message,
+                            showConfirmButton: true
+                        }).then(() => {
+                            if (res.URL && res.URL !== "") {
+                                window.location.href = res.URL;
+                            }
+                        });
+                    }
+            },
+            error: function (err) {
+                // AJAX level error
+                Swal.fire({
+                    title: "Failed!",
+                    text: "Something went wrong on server.",
+                    icon: "error",
+                    confirmButtonColor: "#5664d2"
+                });
+            }
+        });
+    });
+});
+
+</script>

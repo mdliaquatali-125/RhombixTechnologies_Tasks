@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Library Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="container-fluid">
+
+        <!-- PAGE HEADER -->
+        <div class="row page-titles">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4 id="greeting" class="mt-3">Hello!</h4>
+                    <span id="date-time" class="mt-5 mb-3">Loading date and time...</span>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-5 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Library</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- DASHBOARD CARDS -->
+        <div class="row mb-4">
+
+            <!-- Total Books -->
+            <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa fa-book fa-2x text-primary mb-2"></i>
+                        <h4 class="mb-0">@ViewBag.BookCount</h4>
+                        <span class="text-muted">Total Books</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Books -->
+            <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
+                        <h4 class="mb-0">@ViewBag.AvailableBookCount</h4>
+                        <span class="text-muted">Available Books</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issued Books -->
+            <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa fa-exchange fa-2x text-warning mb-2"></i>
+                        <h4 class="mb-0">@ViewBag.IssueBook</h4>
+                        <span class="text-muted">Issued Books</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overdue Books -->
+            <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa fa-undo  fa-2x text-success mb-2"></i>
+                        <h4 class="mb-0">@ViewBag.ReturnBook</h4>
+                        <span class="text-muted">Return Books</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- JS Script for Greeting and Date-Time -->
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const day = now.toLocaleDateString('en-GB', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Greeting based on time
+        let greeting = "Hello!";
+        if (hours >= 5 && hours < 12) {
+            greeting = "Good Morning!";
+        } else if (hours >= 12 && hours < 17) {
+            greeting = "Good Afternoon!";
+        } else if (hours >= 17 && hours < 21) {
+            greeting = "Good Evening!";
+        } else {
+            greeting = "Good Night!";
+        }
+
+        // Update DOM
+        document.getElementById("greeting").innerText = greeting;
+        document.getElementById("date-time").innerText = `${day} | ${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial call
+</script>

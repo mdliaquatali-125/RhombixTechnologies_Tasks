@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MusicPlayerdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ErrorLogMaster">
+    <Key>
+      <PropertyRef Name="ErrorID" />
+    </Key>
+    <Property Name="ErrorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorDateTime" Type="DateTime" Precision="3" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ControllerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MethodName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="InnerErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="MusicPlayerdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ErrorLogMasters" EntityType="Self.ErrorLogMaster" />
+    <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+    <EntitySet Name="Musics" EntityType="MusicPlayerdbModel.Music" />
+  </EntityContainer>
+  <EntityType Name="Music">
+    <Key>
+      <PropertyRef Name="MusicID" />
+    </Key>
+    <Property Name="MusicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MusicTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MusicFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MusicCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MusicStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MusicImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SingerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MusicLike" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

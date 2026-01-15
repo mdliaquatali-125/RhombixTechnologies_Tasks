@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MusicPlayerdbModelStoreContainer" CdmEntityContainer="MusicPlayerdbEntities">
+    <EntitySetMapping Name="ErrorLogMasters">
+      <EntityTypeMapping TypeName="MusicPlayerdbModel.ErrorLogMaster">
+        <MappingFragment StoreEntitySet="ErrorLogMaster">
+          <ScalarProperty Name="ErrorID" ColumnName="ErrorID" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorDateTime" ColumnName="ErrorDateTime" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+          <ScalarProperty Name="InnerErrorMessage" ColumnName="InnerErrorMessage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMasters">
+      <EntityTypeMapping TypeName="MusicPlayerdbModel.UserMaster">
+        <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+          <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Musics">
+      <EntityTypeMapping TypeName="MusicPlayerdbModel.Music">
+        <MappingFragment StoreEntitySet="Music">
+          <ScalarProperty Name="MusicLike" ColumnName="MusicLike" />
+          <ScalarProperty Name="SingerName" ColumnName="SingerName" />
+          <ScalarProperty Name="MusicImage" ColumnName="MusicImage" />
+          <ScalarProperty Name="MusicStatus" ColumnName="MusicStatus" />
+          <ScalarProperty Name="MusicCategory" ColumnName="MusicCategory" />
+          <ScalarProperty Name="MusicFilePath" ColumnName="MusicFilePath" />
+          <ScalarProperty Name="MusicTitle" ColumnName="MusicTitle" />
+          <ScalarProperty Name="MusicID" ColumnName="MusicID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

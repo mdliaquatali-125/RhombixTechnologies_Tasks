@@ -1,0 +1,142 @@
+﻿@model IEnumerable<MusicPlayer.Models.MusicPlayerModel>
+
+@{
+    ViewBag.Title = "PlayList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4 id="greeting" class="mt-3">Music Play List!</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-5 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Music Player</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Music Play List</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class=" shadow-sm container-fluid">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-3">
+                <i class="la la-list"></i>  Music Play List
+            </h5>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table id="example3" class="table table-striped align-middle text-nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Music Title</th>
+                            <th>Singer Name</th>
+                            <th>Music</th>
+                            <th>Music Image</th>
+                            <th>Music Category</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MusicTitle</td>
+                                <td>@item.SingerName</td>
+                                <td>
+                                    <audio controls style="width:200px;">
+                                        <source src="@item.MusicFilePath" type="audio/mpeg" />
+                                    </audio>
+                                </td>
+                                <td>
+                                    <img src="@item.MusicImage" style="width:80px;height:80px;object-fit:cover;border-radius:8px;" />
+                                </td>
+                                <td>@item.MusicCategory</td>
+                                <td>
+                                    <a onclick="Delete('@item.MusicID','/MusicPlayer/Delete')" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function Delete(MusicID, url) {
+            Swal.fire({
+                title: "Delete Music?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: { MusicID: MusicID },
+                        success: function (res) {
+                            if (res.Status === "Success") {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Good Job!",
+                                    text: res.Message,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    window.location.href = res.URL;
+                                });
+                            }
+                            else if (res.Status === "CatchError") {
+                                if (res.URL && res.URL !== "") {
+                                    window.location.href = res.URL;
+                                }
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error!",
+                                    text: res.Message,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    if (res.URL && res.URL !== "") {
+                                        window.location.href = res.URL;
+                                    }
+                                });
+                            }
+
+                        },
+                        error: function (err) {
+                            // AJAX level error
+                            Swal.fire({
+                                title: "Failed!",
+                                text: "Something went wrong on server.",
+                                icon: "error",
+                                confirmButtonColor: "#5664d2"
+                            });
+                        }
+                    });
+                }
+                else {
+                    // User clicked cancel
+                    Swal.fire({
+                        title: "Cancelled",
+                        text: "Operation Cancelled :)",
+                        icon: "error",
+                        confirmButtonColor: "#5664d2"
+                    });
+                }
+            });
+    }
+</script>

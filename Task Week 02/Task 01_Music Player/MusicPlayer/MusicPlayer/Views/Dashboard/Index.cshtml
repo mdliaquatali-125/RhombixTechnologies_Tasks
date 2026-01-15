@@ -1,0 +1,603 @@
+﻿
+@model  IEnumerable<MusicPlayer.Models.MusicPlayerModel>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .search-box {
+        position: relative;
+    }
+
+        .search-box input {
+            padding-left: 35px;
+            border-radius: 8px;
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 14px;
+        }
+
+    .top-search-bar {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    /* Search box style */
+    .search-box {
+        position: relative;
+    }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 40px 15px 39px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 16px;
+        }
+
+    .quick-texts {
+        padding: 0;
+        margin: 0;
+    }
+
+    .filter-btn {
+        /*background: #5e72e4;*/
+        color: #828690;
+        padding: 15px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    .gap-2 {
+        gap: 8px;
+    }
+    
+    .audio-player {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .album-art {
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        margin: 0 auto 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .track-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .track-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .track-artist {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .progress-container {
+        margin-bottom: 20px;
+    }
+
+    .progress-bar {
+        height: 5px;
+        background: #e9ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #1db954, #1ed760);
+        width: 0%;
+        transition: width 0.1s linear;
+    }
+
+    .time-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: #f8f9fa;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .control-btn:hover {
+            background: #e9ecef;
+            transform: scale(1.1);
+        }
+
+        .control-btn.play-pause {
+            width: 50px;
+            height: 50px;
+            background: #1db954;
+            color: white;
+        }
+
+            .control-btn.play-pause:hover {
+                background: #1ed760;
+            }
+
+    .volume-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .volume-slider {
+        flex-grow: 1;
+        height: 4px;
+        background: #e9ecef;
+        border-radius: 2px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .volume-level {
+        height: 100%;
+        background: #1db954;
+        border-radius: 2px;
+        width: 70%;
+    }
+
+    .visualizer {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 30px;
+        gap: 3px;
+        margin: 20px 0;
+    }
+
+    .bar {
+        width: 3px;
+        background: #1db954;
+        border-radius: 3px;
+        animation: bounce 1s infinite;
+    }
+
+    @@keyframes bounce {
+        0%, 100% {
+            height: 5px;
+        }
+
+        50% {
+            height: 20px;
+        }
+    }
+</style>
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4 id="greeting" class="mt-3 mb-2">Hello!</h4>
+                    <span id="date-time" class="mt-5 mb-3">Loading date and time...</span>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-5 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row align-items-center mt-4 g-2 search-filter-bar page-titles">
+            <div class="col-12 col-md-8">
+                <div class="search-box w-100">
+                    <i class="mdi mdi-magnify"></i>
+                    <input type="text" placeholder="Search music..." />
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="quick-texts d-flex justify-content-md-end justify-content-start flex-wrap gap-2 mt-2 mt-md-0">
+                    <span class="filter-btn" id="_all">All</span>
+                    <span class="filter-btn" id="_pop">Pop</span>
+                    <span class="filter-btn" id="_electronic">Electronic</span>
+                    <span class="filter-btn" id="_classical">Classical</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+
+            <style>
+                .widget-stat.card {
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    cursor: pointer;
+                }
+
+                    .widget-stat.card:hover {
+                        transform: translateY(-5px) scale(1.02); /* halka lift aur zoom */
+                        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); /* shadow effect */
+                    }
+
+                .widget-stat .media-body h3 {
+                    transition: color 0.3s ease;
+                }
+
+                .widget-stat.card:hover .media-body h3 {
+                    color: #ffd700; /* hover pe thoda highlight color */
+                }
+            </style>
+
+            <!-- LEFT SIDE : Your cards -->
+            <div class="col-lg-7">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-xl-6 col-sm-12 mb-3">
+                            <div class="widget-stat card bg-primary music-card"
+                                  data-id="@item.MusicID"
+                                 data-music="@item.MusicFilePath"
+                                 data-image="@item.MusicImage"
+                                 data-title="@item.MusicTitle"
+                                 data-artist="@item.SingerName"
+                                 data-category="@item.MusicCategory">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <span class="mr-3">
+                                            <img src="@item.MusicImage" style="width:80px;height:80px;object-fit:cover;border-radius:100%;" />
+                                        </span>
+                                        <div class="media-body text-white mt-3">
+                                            <h3 class="text-white" style="font-size:15px;">@item.MusicTitle</h3>
+                                            <h3 class="text-white" style="font-size:15px;">@item.SingerName .@item.MusicCategory</h3>
+                                            <!-- Dynamic Heart -->
+                                            <i title="Add Favorite" class="la @(item.MusicLike == "Like" ? "la-heart" : "la-heart-o") like-btn"
+                                               style="font-size:30px; cursor:pointer; @(item.MusicLike == "Like" ? "color:red;" : "")">
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- RIGHT SIDE : Music Player -->
+            <div class="col-lg-5 align-items-center justify-content-center">
+                <div class="audio-player">
+                    <div class="album-art">
+                        <img src="https://images.unsplash.com/photo-1564419431636-fe02f0eff7aa?auto=format&fit=crop&w=400&q=80" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="visualizer">
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        <div class="bar"></div><div class="bar"></div>
+                    </div>
+                    <div class="track-info">
+                        <div class="track-title">Summer Vibes</div>
+                        <div class="track-artist">John Smith</div>
+                    </div>
+                    <!-- REAL AUDIO ELEMENT -->
+                    <audio id="audio">
+                        <source src="~/assets/Audio/1.mp3" type="audio/mpeg" />
+                    </audio>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <div class="time-info">
+                            <span id="currentTime">0:00</span>
+                            <span id="totalTime">0:00</span>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" id="prevBtn"><i class="la la-backward"></i></button>
+                        <button class="control-btn play-pause" id="playBtn"><i class="la la-play"></i></button>
+                        <button class="control-btn" id="nextBtn"><i class="la la-forward"></i></button>
+                    </div>
+                    <div class="volume-container">
+                        <i class="la la-volume-up"></i>
+                        <div class="volume-slider" id="volumeSlider">
+                            <div class="volume-level" id="volumeLevel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--JS Script-->
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const day = now.toLocaleDateString('en-GB', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Greeting based on time
+        let greeting = "Hello!";
+        if (hours >= 5 && hours < 12) {
+            greeting = "Good Morning!";
+        } else if (hours >= 12 && hours < 17) {
+            greeting = "Good Afternoon!";
+        } else if (hours >= 17 && hours < 21) {
+            greeting = "Good Evening!";
+        } else {
+            greeting = "Good Night!";
+        }
+
+        // Update DOM
+        document.getElementById("greeting").innerText = greeting;
+        document.getElementById("date-time").innerText = `${day} | ${hours}:${minutes}:${seconds}`;
+    }
+
+    // Update every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial call
+
+    const audio = document.getElementById("audio");
+    const albumArt = document.querySelector(".album-art img");
+    const trackTitle = document.querySelector(".track-title");
+    const trackArtist = document.querySelector(".track-artist");
+    const playBtn = document.getElementById("playBtn");
+    const progress = document.getElementById("progress");
+    const progressBar = document.getElementById("progressBar");
+    const currentTimeEl = document.getElementById("currentTime");
+    const totalTimeEl = document.getElementById("totalTime");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const volumeLevel = document.getElementById("volumeLevel");
+
+    let playing = false;
+
+    // Play / Pause
+    playBtn.onclick = () => {
+        if (!playing) {
+            audio.play();
+            playBtn.innerHTML = '<i class="la la-pause"></i>';
+            playing = true;
+        } else {
+            audio.pause();
+            playBtn.innerHTML = '<i class="la la-play"></i>';
+            playing = false;
+        }
+    };
+
+    // Click on left-side card to update player
+    document.querySelectorAll(".music-card").forEach(card => {
+        card.addEventListener("click", function () {
+            const musicSrc = this.dataset.music;
+            const imageSrc = this.dataset.image;
+            const title = this.dataset.title;
+            const artist = this.dataset.artist;
+
+            audio.src = musicSrc;
+            albumArt.src = imageSrc;
+            trackTitle.innerText = title;
+            trackArtist.innerText = artist;
+
+            audio.play();
+            playBtn.innerHTML = '<i class="la la-pause"></i>';
+            playing = true;
+        });
+    });
+
+    // Update progress
+    audio.ontimeupdate = () => {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progress.style.width = percent + "%";
+        currentTimeEl.innerText = formatTime(audio.currentTime);
+        totalTimeEl.innerText = formatTime(audio.duration);
+    };
+
+    // Click to seek
+    progressBar.onclick = e => {
+        const width = progressBar.clientWidth;
+        const click = e.offsetX;
+        audio.currentTime = (click / width) * audio.duration;
+    };
+
+    // Volume control
+    volumeSlider.onclick = e => {
+        const width = volumeSlider.clientWidth;
+        const click = e.offsetX;
+        const vol = click / width;
+        audio.volume = vol;
+        volumeLevel.style.width = (vol * 100) + "%";
+    };
+
+    // Time formatting
+    function formatTime(sec) {
+        if (!sec) return "0:00";
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60).toString().padStart(2, "0");
+        return m + ":" + s;
+    }
+
+    // Array of all music cards
+    const musicCards = Array.from(document.querySelectorAll(".music-card"));
+    let currentIndex = 0;
+
+    // Update currentIndex when a card is clicked
+    document.querySelectorAll(".music-card").forEach((card, index) => {
+        card.addEventListener("click", function () {
+            currentIndex = index; // set current song index
+        });
+    });
+
+    // Prev Button
+    document.getElementById("prevBtn").onclick = () => {
+        if (musicCards.length === 0) return;
+        currentIndex = (currentIndex - 1 + musicCards.length) % musicCards.length;
+        const card = musicCards[currentIndex];
+        audio.src = card.dataset.music;
+        albumArt.src = card.dataset.image;
+        trackTitle.innerText = card.dataset.title;
+        trackArtist.innerText = card.dataset.artist;
+        audio.play();
+        playBtn.innerHTML = '<i class="la la-pause"></i>';
+        playing = true;
+    };
+
+    // Next Button
+    document.getElementById("nextBtn").onclick = () => {
+        if (musicCards.length === 0) return;
+        currentIndex = (currentIndex + 1) % musicCards.length;
+        const card = musicCards[currentIndex];
+        audio.src = card.dataset.music;
+        albumArt.src = card.dataset.image;
+        trackTitle.innerText = card.dataset.title;
+        trackArtist.innerText = card.dataset.artist;
+        audio.play();
+        playBtn.innerHTML = '<i class="la la-pause"></i>';
+        playing = true;
+    };
+
+    const searchInput = document.querySelector(".search-box input");
+    const allCards = document.querySelectorAll(".music-card");
+
+    searchInput.addEventListener("keyup", function () {
+        let text = this.value.toLowerCase();
+
+        allCards.forEach(card => {
+            let title = card.dataset.title.toLowerCase();
+            let artist = card.dataset.artist.toLowerCase();
+            let category = card.innerText.toLowerCase(); // optional full text search
+
+            if (title.includes(text) || artist.includes(text) || category.includes(text)) {
+                card.parentElement.style.display = "block";  // show card
+            } else {
+                card.parentElement.style.display = "none";   // hide card
+            }
+        });
+    });
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.music-card');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            let category = this.innerText.toLowerCase();
+
+            cards.forEach(card => {
+                let cardCat = card.dataset.category.toLowerCase();
+
+                if (category === 'all' || cardCat === category) {
+                    card.parentElement.style.display = "block";
+                } else {
+                    card.parentElement.style.display = "none";
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll(".like-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+
+            e.stopPropagation(); // card click ko block kare (IMPORTANT)
+
+            // jis card ke andar like icon hoga - uska parent card find karo
+            let card = this.closest(".music-card");
+            let cardId = card.dataset.id; // <-- yahan se ID mil jayegi
+
+            let Result = null;
+            //
+            if (this.classList.contains("la-heart-o")) {
+                this.classList.remove("la-heart-o");
+                this.classList.add("la-heart");
+                this.style.color = "red";     // heart red on like
+                Result = "Like";
+            }
+            else {
+                this.classList.remove("la-heart");
+                this.classList.add("la-heart-o");
+                this.style.color = "";       // back to default
+                Result = "UnLike";
+            }
+
+            $.ajax({
+                url: "/MusicPlayer/LikeUnlike",
+                type: "POST",
+                data: {
+                    cardId: cardId,
+                    Result: Result
+                },
+                success: function (res) {
+                    if (res.Status === "Success") {
+                            //window.location.href = res.URL;
+                    }
+                    else if (res.Status === "CatchError") {
+                        if (res.URL && res.URL !== "") {
+                            window.location.href = res.URL;
+                        }
+                    }
+                    else {
+                            if (res.URL && res.URL !== "") {
+                                window.location.href = res.URL;
+                            }
+                    }
+                },
+            });
+        });
+    });
+</script>
+

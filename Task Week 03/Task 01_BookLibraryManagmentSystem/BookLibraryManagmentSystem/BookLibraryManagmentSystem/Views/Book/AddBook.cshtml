@@ -1,0 +1,205 @@
+﻿@model BookLibraryManagmentSystem.Models.BookModel
+
+@{
+    ViewBag.Title = "Add Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="container-fluid">
+
+        <!-- PAGE HEADER -->
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <h4 class="mb-0">➕ Add Book</h4>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active">Add Book</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- FORM CARD -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-2">📘 Add Book Information</h5>
+            </div>
+            @using (Ajax.BeginForm("AddBook", "Book",
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        OnBegin = "OnBeginAjax",
+                        OnSuccess = "OnSuccessAjax",
+                        OnFailure = "OnFailureAjax"
+                    },
+                    new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Book Title</label>
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control input", placeholder = "Enter Book Title", required = "" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Author Name</label>
+                            @Html.TextBoxFor(model => model.Author, new { @class = "form-control input", placeholder = "Enter Author Name", required = "" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Category</label>
+                            @Html.DropDownListFor(
+                                model => model.Category,
+                                new List<SelectListItem>()
+                                    {
+                                      new SelectListItem { Text = "Select Category", Value = "" },
+                                      new SelectListItem { Text = "Fiction", Value = "Fiction" },
+                                      new SelectListItem { Text = "Non-Fiction", Value = "Non-Fiction" },
+                                      new SelectListItem { Text = "Science", Value = "Science" },
+                                      new SelectListItem { Text = "Technology", Value = "Technology" },
+                                      new SelectListItem { Text = "Programming", Value = "Programming" },
+                                      new SelectListItem { Text = "Computer Science", Value = "Computer Science" },
+                                      new SelectListItem { Text = "Mathematics", Value = "Mathematics" },
+                                      new SelectListItem { Text = "History", Value = "History" },
+                                      new SelectListItem { Text = "Biography", Value = "Biography" },
+                                      new SelectListItem { Text = "Autobiography", Value = "Autobiography" },
+                                      new SelectListItem { Text = "Novel", Value = "Novel" },
+                                      new SelectListItem { Text = "Short Stories", Value = "Short Stories" },
+                                      new SelectListItem { Text = "Poetry", Value = "Poetry" },
+                                      new SelectListItem { Text = "Islamic Studies", Value = "Islamic Studies" },
+                                      new SelectListItem { Text = "Religion", Value = "Religion" },
+                                      new SelectListItem { Text = "Philosophy", Value = "Philosophy" },
+                                      new SelectListItem { Text = "Psychology", Value = "Psychology" },
+                                      new SelectListItem { Text = "Self-Help", Value = "Self-Help" },
+                                      new SelectListItem { Text = "Business", Value = "Business" },
+                                      new SelectListItem { Text = "Management", Value = "Management" },
+                                      new SelectListItem { Text = "Economics", Value = "Economics" },
+                                      new SelectListItem { Text = "Finance", Value = "Finance" },
+                                      new SelectListItem { Text = "Accounting", Value = "Accounting" },
+                                      new SelectListItem { Text = "Marketing", Value = "Marketing" },
+                                      new SelectListItem { Text = "Education", Value = "Education" },
+                                      new SelectListItem { Text = "Exam Preparation", Value = "Exam Preparation" },
+                                      new SelectListItem { Text = "Reference", Value = "Reference" },
+                                      new SelectListItem { Text = "Dictionary", Value = "Dictionary" },
+                                      new SelectListItem { Text = "Encyclopedia", Value = "Encyclopedia" },
+                                      new SelectListItem { Text = "Research", Value = "Research" },
+                                      new SelectListItem { Text = "Thesis", Value = "Thesis" },
+                                      new SelectListItem { Text = "Medical", Value = "Medical" },
+                                      new SelectListItem { Text = "Engineering", Value = "Engineering" },
+                                      new SelectListItem { Text = "Law", Value = "Law" },
+                                      new SelectListItem { Text = "Politics", Value = "Politics" },
+                                      new SelectListItem { Text = "Geography", Value = "Geography" },
+                                      new SelectListItem { Text = "Travel", Value = "Travel" },
+                                      new SelectListItem { Text = "Art & Design", Value = "Art & Design" },
+                                      new SelectListItem { Text = "Photography", Value = "Photography" },
+                                      new SelectListItem { Text = "Music", Value = "Music" },
+                                      new SelectListItem { Text = "Sports", Value = "Sports" },
+                                      new SelectListItem { Text = "Health & Fitness", Value = "Health & Fitness" },
+                                      new SelectListItem { Text = "Children", Value = "Children" },
+                                      new SelectListItem { Text = "Comics", Value = "Comics" },
+                                      new SelectListItem { Text = "Magazines", Value = "Magazines" },
+                                      new SelectListItem { Text = "Journals", Value = "Journals" }
+                                     },
+                                    new { @class = "form-control", required = "" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>ISBN</label>
+                            @Html.TextBoxFor(model => model.ISBN, new { @class = "form-control input", placeholder = "Enter ISBN #", required = "" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Quantity</label>
+                            @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control input", placeholder = "Enter Quantity", required = "" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Available</label>
+                            @Html.DropDownListFor(
+    model => model.IsAvailable,
+    new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Select Availability", Value = "" },
+        new SelectListItem { Text = "Yes", Value = "true" },
+        new SelectListItem { Text = "No", Value = "false" }
+    },
+    new { @class = "form-control", required = "required" })
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Book Cover</label>
+
+                            @Html.TextBoxFor(model => model._CoverImage,
+                                new { type = "file", @class = "form-control", accept = "image/*", onchange = "previewAddImage(this)" })
+
+                            <img id="addCoverPreview"
+                                 src="~/assets/images/no image.jpg"
+                                 class="img-thumbnail mt-2"
+                                 style="height:120px;" />
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-save"></i> Add Book
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function OnBeginAjax() {
+        Swal.fire({
+            icon: "info",
+            title: "Working on it!",
+            text: "Please wait.",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+    }
+
+    function OnSuccessAjax(res) {
+        if (res.Status === "Success") {
+            Swal.fire({
+                icon: "success",
+                title: "Good Job!",
+                text: res.Message,
+                showConfirmButton: true
+            }).then(() => { window.location.href = res.URL; });
+        } else if (res.Status === "CatchError") {
+            window.location.href = res.URL;
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: res.Message,
+                showConfirmButton: true
+            }).then(() => { window.location.href = res.URL; });
+        }
+    }
+
+    function OnFailureAjax(res) {
+        Swal.fire({
+            icon: "error",
+            title: "Failed!",
+            text: res.Message,
+            showConfirmButton: true
+        }).then(() => {
+            if (res.URL && res.URL !== "") { window.location.href = res.URL; }
+        });
+    }
+</script>
+
+<script>
+    function previewAddImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('addCoverPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

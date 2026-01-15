@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibraryBookManagmentSystemdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ErrorLogMaster">
+    <Key>
+      <PropertyRef Name="ErrorID" />
+    </Key>
+    <Property Name="ErrorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorDateTime" Type="DateTime" Precision="3" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ControllerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MethodName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="InnerErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="LibraryBookManagmentSystemdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ErrorLogMasters" EntityType="Self.ErrorLogMaster" />
+    <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+    <EntitySet Name="BookDetails" EntityType="LibraryBookManagmentSystemdbModel.BookDetail" />
+    <EntitySet Name="BorrowHistories" EntityType="LibraryBookManagmentSystemdbModel.BorrowHistory" />
+    <AssociationSet Name="FK_Borrow_Book" Association="LibraryBookManagmentSystemdbModel.FK_Borrow_Book">
+      <End Role="BookDetail" EntitySet="BookDetails" />
+      <End Role="BorrowHistory" EntitySet="BorrowHistories" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BookDetail">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Author" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ISBN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="CoverImage" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="IsAvailable" Type="Boolean" />
+    <NavigationProperty Name="BorrowHistories" Relationship="LibraryBookManagmentSystemdbModel.FK_Borrow_Book" FromRole="BookDetail" ToRole="BorrowHistory" />
+  </EntityType>
+  <EntityType Name="BorrowHistory">
+    <Key>
+      <PropertyRef Name="BorrowID" />
+    </Key>
+    <Property Name="BorrowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookID" Type="Int32" Nullable="false" />
+    <Property Name="BorrowerName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="BorrowDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ReturnDate" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BookDetail" Relationship="LibraryBookManagmentSystemdbModel.FK_Borrow_Book" FromRole="BorrowHistory" ToRole="BookDetail" />
+  </EntityType>
+  <Association Name="FK_Borrow_Book">
+    <End Type="LibraryBookManagmentSystemdbModel.BookDetail" Role="BookDetail" Multiplicity="1" />
+    <End Type="LibraryBookManagmentSystemdbModel.BorrowHistory" Role="BorrowHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookDetail">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="BorrowHistory">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

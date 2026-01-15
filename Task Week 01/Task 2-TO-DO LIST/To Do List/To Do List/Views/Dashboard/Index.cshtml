@@ -1,0 +1,263 @@
+﻿
+@model  IEnumerable<To_Do_List.Models.TaskModel>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .search-box {
+        position: relative;
+    }
+
+        .search-box input {
+            padding-left: 35px;
+            border-radius: 8px;
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 14px;
+        }
+</style>
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4 id="greeting" class="mt-3">Hello!</h4>
+                    <span id="date-time" class="mt-5 mb-3">Loading date and time...</span>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-5 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+
+        <div class="row">
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la la-tasks"></i>
+                            </span>
+                            <div class="media-body text-white mt-3">
+                                <p class="mb-1">Total Task</p>
+                                <h3 class="text-white">@ViewBag.TotalTaskCount</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-warning">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la mdi-lan-pending"></i>
+                            </span>
+                            <div class="media-body text-white mt-3">
+                                <p class="mb-1">Pending Task</p>
+                                <h3 class="text-white">@ViewBag.TotalTaskPending</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-green-light">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la la-tasks"></i>
+                            </span>
+                            <div class="media-body text-white mt-3">
+                                <p class="mb-1">In Progress Task</p>
+                                <h3 class="text-white">@ViewBag.TotalTaskInProgress</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="widget-stat card bg-gray-dark">
+                    <div class="card-body">
+                        <div class="media">
+                            <span class="mr-3">
+                                <i class="la mdi-lan-pending"></i>
+                            </span>
+                            <div class="media-body text-white mt-3">
+                                <p class="mb-1">Complete Task</p>
+                                <h3 class="text-white">@ViewBag.TotalTaskComplete</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" shadow-sm container-fluid">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-3">
+                <i class="la la-list"></i>  Task List
+            </h5>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table id="example3" class="table table-striped align-middle text-nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Task Title</th>
+                            <th>Priority</th>
+                            <th>Category</th>
+                            <th>Date </th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TaskTitle</td>
+                                <td>@item.TaskPriority</td>
+                                <td>@item.TaskCategory</td>
+                                <td>
+                                    @item.TaskDate
+                                </td>
+                                <td>@item.TaskDescription</td>
+                                <td>@item.Status</td>
+                                <td>
+                                    <a href="/Dashboard/Edit?TaskID=@item.TaskID" class="btn btn-sm btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a onclick="DeleteUser('@item.TaskID','/Dashboard/Delete')" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--JS Script-->
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const day = now.toLocaleDateString('en-GB', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Greeting based on time
+        let greeting = "Hello!";
+        if (hours >= 5 && hours < 12) {
+            greeting = "Good Morning!";
+        } else if (hours >= 12 && hours < 17) {
+            greeting = "Good Afternoon!";
+        } else if (hours >= 17 && hours < 21) {
+            greeting = "Good Evening!";
+        } else {
+            greeting = "Good Night!";
+        }
+
+        // Update DOM
+        document.getElementById("greeting").innerText = greeting;
+        document.getElementById("date-time").innerText = `${day} | ${hours}:${minutes}:${seconds}`;
+    }
+
+    // Update every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial call
+</script>
+
+<script>
+    function DeleteUser(TaskID) {
+        Swal.fire({
+            title: "Delete User?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/Dashboard/Delete",
+                    type: "POST",
+                    data: { TaskID: TaskID },
+                    success: function (res) {
+                        if (res.Status === "Success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Good Job!",
+                                text: res.Message,
+                                showConfirmButton: true
+                            }).then(() => {
+                                window.location.href = res.URL;
+                            });
+                        }
+                        else if (res.Status === "CatchError") {
+                            if (res.URL && res.URL !== "") {
+                                window.location.href = res.URL;
+                            }
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error!",
+                                text: res.Message,
+                                showConfirmButton: true
+                            }).then(() => {
+                                if (res.URL && res.URL !== "") {
+                                    window.location.href = res.URL;
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (err) {
+                        // AJAX level error
+                        Swal.fire({
+                            title: "Failed!",
+                            text: "Something went wrong on server.",
+                            icon: "error",
+                            confirmButtonColor: "#5664d2"
+                        });
+                    }
+                });
+            }
+            else {
+                // User clicked cancel
+                Swal.fire({
+                    title: "Cancelled",
+                    text: "Operation Cancelled :)",
+                    icon: "error",
+                    confirmButtonColor: "#5664d2"
+                });
+            }
+        });
+    }
+</script>

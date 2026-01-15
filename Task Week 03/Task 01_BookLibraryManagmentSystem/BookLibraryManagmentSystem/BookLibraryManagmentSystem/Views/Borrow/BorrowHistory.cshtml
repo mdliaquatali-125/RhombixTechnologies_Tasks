@@ -1,0 +1,142 @@
+﻿@model IEnumerable<BookLibraryManagmentSystem.Models.BorrowModel>
+
+@{
+    ViewBag.Title = "Borrow History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="container-fluid">
+
+        <!-- PAGE HEADER -->
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <h4 class="mb-0">📕 Borrow History</h4>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Library</li>
+                    <li class="breadcrumb-item active">Borrow History</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-2">📕 All Borrow History</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example3" class="display table table-striped text-nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Book Title</th>
+                                <th>Borrow Name</th>
+                                <th>Borrow Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dummy Data -->
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.BookTitle</td>
+                                    <td>@item.BorrowerName</td>
+                                    <td>@item.BorrowDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.ReturnDate.ToString("dd-MM-yyyy")</td>
+                                    <td>
+                                        <span class="badge @(item.Status=="Available"?"bg-success":"bg-warning")">
+                                            @item.Status
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("BorrowEdit","Borrow", new { BorrowID = item.BorrowID })"
+                                           class="btn btn-sm btn-warning">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a onclick="Delete('@item.BorrowID','/Borrow/Delete')" class="btn btn-sm btn-danger" title="Delete"><i class="fa fa-trash"></i></a>
+
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Delete(BorrowID, url) {
+        Swal.fire({
+            title: "Delete Music?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: { BorrowID: BorrowID },
+                    success: function (res) {
+                        if (res.Status === "Success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Good Job!",
+                                text: res.Message,
+                                showConfirmButton: true
+                            }).then(() => {
+                                window.location.href = res.URL;
+                            });
+                        }
+                        else if (res.Status === "CatchError") {
+                            if (res.URL && res.URL !== "") {
+                                window.location.href = res.URL;
+                            }
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error!",
+                                text: res.Message,
+                                showConfirmButton: true
+                            }).then(() => {
+                                if (res.URL && res.URL !== "") {
+                                    window.location.href = res.URL;
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (err) {
+                        // AJAX level error
+                        Swal.fire({
+                            title: "Failed!",
+                            text: "Something went wrong on server.",
+                            icon: "error",
+                            confirmButtonColor: "#5664d2"
+                        });
+                    }
+                });
+            }
+            else {
+                // User clicked cancel
+                Swal.fire({
+                    title: "Cancelled",
+                    text: "Operation Cancelled :)",
+                    icon: "error",
+                    confirmButtonColor: "#5664d2"
+                });
+            }
+        });
+    }
+</script>

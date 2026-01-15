@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MusicPlayerdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ErrorLogMaster">
+    <Key>
+      <PropertyRef Name="ErrorID" />
+    </Key>
+    <Property Name="ErrorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErrorMessage" Type="varchar(max)" />
+    <Property Name="ErrorDateTime" Type="datetime" />
+    <Property Name="UserName" Type="varchar(max)" />
+    <Property Name="ControllerName" Type="varchar(max)" />
+    <Property Name="MethodName" Type="varchar(max)" />
+    <Property Name="InnerErrorMessage" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Music">
+    <Key>
+      <PropertyRef Name="MusicID" />
+    </Key>
+    <Property Name="MusicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MusicTitle" Type="nvarchar(max)" />
+    <Property Name="MusicFilePath" Type="nvarchar(max)" />
+    <Property Name="MusicCategory" Type="nvarchar(max)" />
+    <Property Name="MusicStatus" Type="nvarchar(max)" />
+    <Property Name="MusicImage" Type="nvarchar(max)" />
+    <Property Name="SingerName" Type="nvarchar(max)" />
+    <Property Name="MusicLike" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" />
+    <Property Name="UserPassword" Type="nvarchar(max)" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="EditDate" Type="datetime" />
+    <Property Name="EditBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityContainer Name="MusicPlayerdbModelStoreContainer">
+    <EntitySet Name="ErrorLogMaster" EntityType="Self.ErrorLogMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Music" EntityType="Self.Music" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,132 @@
+﻿@model BookLibraryManagmentSystem.Models.BorrowModel
+
+@{
+    ViewBag.Title = "Update Borrow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="container-fluid">
+
+        <!-- HEADER -->
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <h4 class="mb-0">✏️ Edit Borrow</h4>
+            </div>
+            <div class="col-sm-6 p-md-0 d-flex justify-content-sm-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Library</li>
+                    <li class="breadcrumb-item active">Edit Borrow</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-2">📕 Edit Borrow Information</h5>
+            </div>
+
+            @using (Ajax.BeginForm("BorrowEdit", "Borrow",
+                         new AjaxOptions
+                         {
+                             HttpMethod = "POST",
+                             OnBegin = "OnBeginAjax",
+                             OnSuccess = "OnSuccessAjax",
+                             OnFailure = "OnFailureAjax"
+                         },
+                         new { enctype = "multipart/form-data" }))
+            {
+                <div class="card-body">
+                    <div class="row">
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.BorrowID)
+                        <div class="col-md-6 mb-3">
+                            <label>Book Title</label>
+                            @Html.DropDownListFor(model => model.BookID, ViewBag.BookTitle as SelectList, "Select Book Title", new { @class = "form-control", required = "" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Borrow Name</label>
+                            @Html.TextBoxFor(model => model.BorrowerName, new { @class = "form-control input", placeholder = "Enter Borrow Name", required = "" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Borrow Date</label>
+                            @Html.TextBoxFor(model => model.BorrowDate, "{0:yyyy-MM-dd}", new { @class = "form-control input", @type = "date", required = "" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Return Date</label>
+                            @Html.TextBoxFor(model => model.ReturnDate, "{0:yyyy-MM-dd}", new { @class = "form-control input", @type = "date" })
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Status</label>
+                            @Html.DropDownListFor(
+                                 model => model.Status,
+                                 new List<SelectListItem>()
+                                 {
+                                     new SelectListItem { Text = "Select Status", Value = "" },
+                                     new SelectListItem { Text = "Returned", Value = "Returned" },
+                                     new SelectListItem { Text = "Not Returned", Value = "Not Returned" }
+                                 },
+                                 new { @class = "form-control", required = "" })
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-save"></i> Update Borrow
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function OnBeginAjax() {
+        Swal.fire({
+            icon: "info",
+            title: "Working on it!",
+            text: "Please wait.",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+    }
+
+    function OnSuccessAjax(res) {
+        if (res.Status === "Success") {
+            Swal.fire({
+                icon: "success",
+                title: "Good Job!",
+                text: res.Message,
+                showConfirmButton: true
+            }).then(() => { window.location.href = res.URL; });
+        } else if (res.Status === "CatchError") {
+            window.location.href = res.URL;
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: res.Message,
+                showConfirmButton: true
+            }).then(() => { window.location.href = res.URL; });
+        }
+    }
+
+    function OnFailureAjax(res) {
+        Swal.fire({
+            icon: "error",
+            title: "Failed!",
+            text: res.Message,
+            showConfirmButton: true
+        }).then(() => {
+            if (res.URL && res.URL !== "") { window.location.href = res.URL; }
+        });
+    }
+</script>
