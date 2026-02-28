@@ -1,0 +1,244 @@
+﻿
+@model IEnumerable<FoodManagementSystem.Models.FoodModel>
+
+@{
+    ViewBag.Title = "NewFood";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Offcanvas Cart -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header bs-canvas-header side-cart-header p-3">
+        <div class="d-inline-block main-cart-title" id="offcanvasRightLabel">My Cart <span>(0 Items)</span></div>
+        <button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="uil uil-multiply"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <div class="side-cart-items">
+            <!-- Cart Items Inject honge yahan -->
+            <div class="cart-top-total p-4">
+                <div class="cart-total-dil pt-2">
+                    <h4>Total Delivery Charges</h4>
+                    <span id="deliveryCharges">Rs 0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas-footer">
+        <div class="main-total-cart">
+            <h2>Total Item Price</h2>
+            <span id="grandTotal">Rs 0</span>
+        </div>
+        <div class="checkout-cart">
+            <a href="/Food/checkout" class="cart-checkout-btn hover-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+</div>
+
+<!-- Body Start -->
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Home</li>
+                            <li class="breadcrumb-item">Food</li>
+                            <li class="breadcrumb-item active" aria-current="page">New Food</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-product-grid">
+        <div class="container">
+            <div class="search120">
+                <div class="header_search position-relative">
+                    <input id="searchFood" class="prompt srch10 form-control"
+                           type="text" placeholder="Search for foods...">
+                    <i class="uil uil-search s-icon"></i>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product-top-dt">
+                        <div class="product-left-title">
+                            <h2>New Food</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="foodListContainer">
+
+                <div class="product-list-view">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3 col-md-6">
+                                <div class="product-item mb-30">
+                                    <a href="@Url.Action("FoodDetails", "Food", new { FoodId = item.FoodId })" class="product-img">
+                                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ?
+    Url.Content("~/assets/FoodManagementSystemWebsite_assets/images/Noimage.png")
+          : Url.Content(item.ImageUrl))"
+                                             alt="Food Image"
+                                             style="height:200px; width:200px; object-fit:cover;" />
+                                        <div class="product-absolute-options">
+                                            <span class="offer-badge-1"> @item.DiscountPercent% off</span>
+                                        </div>
+                                    </a>
+                                    <div class="product-text-dt">
+                                        <p>
+                                            @(item.IsAvailable ? "Available (In Stock)" : "Not Available (Out of Stock)")
+                                        </p>
+                                        <h4>@item.FoodName</h4>
+                                        <div class="product-price">
+                                            Rs    @(Math.Truncate(item.DiscountPrice)) <span>Rs @(Math.Truncate(item.Price))</span>
+                                        </div>
+                                        <div class="qty-cart">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus minus-btn">
+                                                <input type="number" step="1" name="quantity" value="1" class="input-text qty text">
+                                                <input type="button" value="+" class="plus plus-btn">
+                                            </div>
+                                            <span class="cart-icon">
+                                                <i class="uil uil-shopping-cart-alt add-to-cart-btn"
+                                                   data-name="@item.FoodName"
+                                                   data-image="@item.ImageUrl"
+                                                   data-price="@item.Price"
+                                                   data-discountprice="@item.DiscountPrice"
+                                                   data-discount="@item.DiscountPercent"
+                                                   data-delivery="@item.DeliveryCharges">
+                                                </i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12">
+                            <div class="more-product-btn">
+                                <button class="show-more-btn hover-btn" onclick="window.location.href = '#';">Show More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Body End -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        function renderCart(cartItems) {
+            var cartContainer = $(".side-cart-items");
+            cartContainer.find(".cart-item").remove(); // Remove old items
+
+            var totalAmount = 0;
+            var totalDelivery = 0;
+
+            $.each(cartItems, function (i, item) {
+                var price = parseFloat(item.DiscountPrice || item.Price);
+                var qty = parseInt(item.FoodQuantity);
+                var itemPrice = price * qty;
+                totalAmount += itemPrice;
+                totalDelivery += parseFloat(item.DeliveryCharges);
+
+                var html = `
+                    <div class="cart-item" data-id="${item.CartID}">
+                        <div class="cart-product-img">
+                            <img src="${item.ImageUrl}" alt="">
+                            <div class="offer-badge">${item.DiscountPercent || 0}% OFF</div>
+                        </div>
+                        <div class="cart-text">
+                            <h4>${item.FoodName}</h4>
+                            <div class="qty-group">
+                                <div class="quantity buttons_added">
+                                    <input type="button" value="-" class="minus minus-btn">
+                                    <input type="number" value="${item.FoodQuantity}" class="input-text qty text">
+                                    <input type="button" value="+" class="plus plus-btn">
+                                </div>
+                                <div class="cart-item-price">
+                                    Rs ${price} <span>Rs ${item.Price}</span>
+                                </div>
+                            </div>
+                            <div class="item-delivery">
+                                <small>Delivery: Rs ${item.DeliveryCharges}</small>
+                            </div>
+                            <button type="button" class="cart-close-btn removeItem">
+                                <i class="uil uil-multiply"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                $(".cart-top-total").before(html);
+            });
+
+            // Update totals
+            $("#offcanvasRightLabel span").text(`(${cartItems.length} Items)`);
+            $("#deliveryCharges").text("Rs " + totalDelivery);
+            $("#grandTotal").text("Rs " + totalAmount);
+
+            // Open Offcanvas
+            var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
+            offcanvas.show();
+        }
+
+        // Add to Cart Click
+        $(document).on("click", ".add-to-cart-btn", function () {
+            var button = $(this);
+
+            $.ajax({
+                url: '@Url.Action("AddtoCart", "Food")',
+                type: 'POST',
+                data: {
+                    FoodName: button.data("name"),
+                    DiscountPercent: button.data("discount"),
+                    DiscountPrice: button.data("discountprice"),
+                    Price: button.data("price"),
+                    ImageUrl: button.data("image"),
+                    FoodQuantity: button.closest(".product-item").find(".qty").val(),
+                    DeliveryCharges: button.data("delivery")
+                },
+                success: function (response) {
+                    if (response.Status === "Success") {
+                        renderCart(response.Data);
+                    }
+                    else if (response.Status == "LoginRequired") {
+                        window.location.href = "/Signin/Index";
+                    }
+                    else {
+                        alert("Error adding item to cart.");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $("#searchFood").on("keypress", function (e) {
+
+        if (e.which == 13) {   // 13 = Enter key
+            e.preventDefault(); // page refresh rokne ke liye
+
+            var searchValue = $(this).val();
+
+                    $.ajax({
+            url: '@Url.Action("NewFood", "Food")',
+            type: "GET",
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            data: { name: searchValue },
+            success: function (result) {
+                $("#foodListContainer").html(result);
+            }
+        });
+
+        }
+    });
+</script>

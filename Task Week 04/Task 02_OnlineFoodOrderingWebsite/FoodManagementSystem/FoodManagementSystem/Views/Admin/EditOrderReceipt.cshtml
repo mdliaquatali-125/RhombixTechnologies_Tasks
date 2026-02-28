@@ -1,0 +1,226 @@
+﻿
+@model IEnumerable<FoodManagementSystem.Models.OrderModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</title>
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/styles.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/admin-style.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-light bg-clr">
+        <a class="navbar-brand logo-brand" href="/Admin/Index" style="font-size:12px;">𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <ul class="navbar-nav ms-auto mr-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <a class="dropdown-item admin-dropdown-item" href="/Signin/Logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link active" href="/Admin/Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                            Food Item
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProducts" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link sub_nav_link" href="/Admin/AllFood">All Food</a>
+                                <a class="nav-link sub_nav_link" href="/Admin/AddFood">Add Food</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="/Admin/Order">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cart-arrow-down"></i></div>
+                            Orders
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    <h2 class="mt-30 page-title">Orders</h2>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-xl-12 col-md-12">
+                                <div class="card card-static-2 mb-30">
+                                    <div class="card-title-2">
+                                        <h2 class="title1458">Invoice</h2>
+                                        <span class="order-id">Order #@item.OrderID</span>
+                                    </div>
+                                    <div class="invoice-content">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6">
+                                                <div class="ordr-date">
+                                                    <b>Order Date :</b> @item.OrderDate
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6">
+                                                <div class="ordr-date right-text">
+                                                    <b>Address :</b> @item.Address<br>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="card card-static-2 mb-30 mt-30">
+                                                    <div class="card-body-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table ucp-table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="width:130px">#</th>
+                                                                        <th>Order Name</th>
+                                                                        <th style="width:150px" class="text-center">Price</th>
+                                                                        <th style="width:150px" class="text-center">Qty</th>
+                                                                        <th style="width:100px" class="text-center">Total</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>
+                                                                            @item.OrderName
+                                                                        </td>
+                                                                        <td class="text-center">Rs @item.OrderPrice</td>
+                                                                        <td class="text-center">@item.OrderQuantity</td>
+                                                                        <td class="text-center">Rs @item.OrderPrice</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7"></div>
+                                            <div class="col-lg-5">
+                                                <div class="order-total-dt">
+                                                    <div class="order-total-left-text">
+                                                        Sub Total
+                                                    </div>
+                                                    <div class="order-total-right-text">
+                                                        Rs @item.OrderPrice
+                                                    </div>
+                                                </div>
+                                                <div class="order-total-dt">
+                                                    <div class="order-total-left-text">
+                                                        Delivery Charges
+                                                    </div>
+                                                    <div class="order-total-right-text">
+                                                        Rs @item.DeliveryCharges
+                                                    </div>
+                                                </div>
+                                                <div class="order-total-dt">
+                                                    <div class="order-total-left-text fsz-18">
+                                                        Total Amount
+                                                    </div>
+                                                    <div class="order-total-right-text fsz-18">
+                                                        Rs @(item.OrderPrice + item.DeliveryCharges)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7"></div>
+                                            <div class="col-lg-5">
+                                                <div class="select-status">
+                                                    <label for="status">Status*</label>
+                                                    <div class="input-group">
+                                                        @*<select id="status" name="status" class="custom-select">
+                                                                <option selected value="Pending">Pending</option>
+                                                                <option value="Cancel">Cancel</option>
+                                                                <option value="Packed">Packed</option>
+                                                                <option value="Ontheway">Ontheway</option>
+                                                                <option value="Delivered">Delivered</option>
+                                                            </select>
+                                                            <div class="input-group-append">
+                                                                <button class="status-btn hover-btn" type="submit">Update Status</button>
+                                                            </div>*@
+                                                        <select class="custom-select statusDropdown" data-id="@item.OrderID">
+                                                            <option value="Pending" @(item.Place == "Pending" ? "selected" : "")>Pending</option>
+                                                            <option value="Packed" @(item.Packed == "Packed" ? "selected" : "")>Packed</option>
+                                                            <option value="Ontheway" @(item.Ontheway == "Ontheway" ? "selected" : "")>Ontheway</option>
+                                                            <option value="Delivered" @(item.Delivered == "Delivered" ? "selected" : "")>Delivered</option>
+                                                        </select>
+                                                        &nbsp;
+                                                        <button type="button"
+                                                                class="status-btn hover-btn updateStatusBtn"
+                                                                data-id="@item.OrderID">
+                                                            Update Status
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-footer mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted-1">© Copyright 2026 Online Food Ordering System . All rights reserved</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/jquery.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/scripts.js"></script>
+
+
+    <script>
+        $(".updateStatusBtn").click(function () {
+
+            var orderId = $(this).data("id");
+
+            var status = $(this)
+                .closest("div")
+                .find(".statusDropdown")
+                .val();
+
+            $.ajax({
+                url: '/Admin/UpdateReceiptStatus',
+                type: 'POST',
+                data: {
+                    orderId: orderId,
+                    status: status
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        window.location.href = "/Admin/OrderReceipt?orderId=" + orderId;
+                    } else {
+                        alert("Error updating status");
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>

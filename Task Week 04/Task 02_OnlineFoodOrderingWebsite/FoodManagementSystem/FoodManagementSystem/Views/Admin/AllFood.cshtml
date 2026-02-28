@@ -1,0 +1,236 @@
+﻿
+@model IEnumerable<FoodManagementSystem.Models.FoodModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</title>
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/styles.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/admin-style.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-light bg-clr">
+        <a class="navbar-brand logo-brand" href="/Admin/Index" style="font-size:12px;">𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <ul class="navbar-nav ms-auto mr-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <a class="dropdown-item admin-dropdown-item" href="/Signin/Logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link active" href="/Admin/Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                            Food Item
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProducts" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link sub_nav_link" href="/Admin/AllFood">All Food</a>
+                                <a class="nav-link sub_nav_link" href="/Admin/AddFood">Add Food</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="/Admin/Order">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cart-arrow-down"></i></div>
+                            Orders
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    <h2 class="mt-30 page-title">Food</h2>
+                    <div class="row justify-content-between">
+                        <div class="col-lg-12">
+                            <a href="/Admin/AddFood" class="add-btn hover-btn">Add New</a>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card card-static-2 mt-30 mb-30">
+                                <div class="card-title-2 pb-3">
+                                    <h4>All Food</h4>
+                                </div>
+                                <div class="card-body-table">
+                                    <div class="table-responsive-md">
+                                        <table class="table ucp-table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th> ID</th>
+                                                    <th>Image</th>
+                                                    <th> Name</th>
+                                                    <th>Description</th>
+                                                    <th>Price</th>
+                                                    <th>Discount Percent</th>
+                                                    <th>Delivery Charges</th>
+                                                    <th>IsAvailable</th>
+                                                    <th>User Name</th>
+                                                    <th>Created Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>@item.FoodId</td>
+                                                        <td>
+                                                            <div class="cate-img-5">
+                                                                <a href="@Url.Action("FoodDetails", "Food", new { FoodId = item.FoodId })" class="product-img">
+                                                                    <img src="@(string.IsNullOrEmpty(item.ImageUrl) ?
+                                                                            Url.Content("~/assets/FoodManagementSystemWebsite_assets/images/Noimage.png"): Url.Content(item.ImageUrl))" alt="Food Image" />
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>@item.FoodName</td>
+                                                        <td>@item.Description</td>
+                                                        <td>@item.Price</td>
+                                                        <td>@item.DiscountPercent %</td>
+                                                        <td>@item.DeliveryCharges</td>
+                                                        <td>
+                                                            <span class="badge-item badge-status">
+                                                                @(item.IsAvailable ? "Yes" : "No")
+                                                            </span>
+                                                        </td>
+                                                        <td>@item.UserID</td>
+                                                        <td>@item.CreatedDate</td>
+                                                        <td class="action-btns">
+                                                            <a href="@Url.Action("EditFood","Admin", new { Foodid = item.FoodId })"
+                                                               class="edit-btn"
+                                                               title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td class="action-btns">
+                                                            <a onclick="Delete('@item.FoodId','/Admin/Delete')"
+                                                               class="edit-btn"
+                                                               title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-footer mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted-1">© Copyright 2026 Online Food Ordering System . All rights reserved</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/jquery.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Required for Ajax.BeginForm -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/scripts.js"></script>
+
+
+    <script>
+        function Delete(FoodId, url) {
+            Swal.fire({
+                title: "Delete Music?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: { FoodId: FoodId },
+                        success: function (res) {
+                            if (res.Status === "Success") {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Good Job!",
+                                    text: res.Message,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    window.location.href = res.URL;
+                                });
+                            }
+                            else if (res.Status === "CatchError") {
+                                if (res.URL && res.URL !== "") {
+                                    window.location.href = res.URL;
+                                }
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error!",
+                                    text: res.Message,
+                                    showConfirmButton: true
+                                }).then(() => {
+                                    if (res.URL && res.URL !== "") {
+                                        window.location.href = res.URL;
+                                    }
+                                });
+                            }
+
+                        },
+                        error: function (err) {
+                            // AJAX level error
+                            Swal.fire({
+                                title: "Failed!",
+                                text: "Something went wrong on server.",
+                                icon: "error",
+                                confirmButtonColor: "#5664d2"
+                            });
+                        }
+                    });
+                }
+                else {
+                    // User clicked cancel
+                    Swal.fire({
+                        title: "Cancelled",
+                        text: "Operation Cancelled :)",
+                        icon: "error",
+                        confirmButtonColor: "#5664d2"
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineFoodOrderingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ErrorLogMaster">
+    <Key>
+      <PropertyRef Name="ErrorID" />
+    </Key>
+    <Property Name="ErrorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorDateTime" Type="DateTime" Precision="3" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ControllerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MethodName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="InnerErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="OnlineFoodOrderingSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ErrorLogMasters" EntityType="Self.ErrorLogMaster" />
+    <EntitySet Name="UserMasters" EntityType="OnlineFoodOrderingSystemModel.UserMaster" />
+    <EntitySet Name="Foods" EntityType="OnlineFoodOrderingSystemModel.Food" />
+    <AssociationSet Name="FK_Products_UserMaster" Association="OnlineFoodOrderingSystemModel.FK_Products_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="Food" EntitySet="Foods" />
+    </AssociationSet>
+    <EntitySet Name="AddtoCarts" EntityType="OnlineFoodOrderingSystemModel.AddtoCart" />
+    <AssociationSet Name="FK_AddtoCart_UserMaster" Association="OnlineFoodOrderingSystemModel.FK_AddtoCart_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="AddtoCart" EntitySet="AddtoCarts" />
+    </AssociationSet>
+    <EntitySet Name="ContactMessages" EntityType="OnlineFoodOrderingSystemModel.ContactMessage" />
+    <EntitySet Name="Orders" EntityType="OnlineFoodOrderingSystemModel.Order" />
+  </EntityContainer>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Foods" Relationship="OnlineFoodOrderingSystemModel.FK_Products_UserMaster" FromRole="UserMaster" ToRole="Food" />
+    <NavigationProperty Name="AddtoCarts" Relationship="OnlineFoodOrderingSystemModel.FK_AddtoCart_UserMaster" FromRole="UserMaster" ToRole="AddtoCart" />
+  </EntityType>
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodId" />
+    </Key>
+    <Property Name="FoodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="DiscountPercent" Type="Int32" />
+    <Property Name="ImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="StockQuantity" Type="Int32" />
+    <Property Name="IsAvailable" Type="Boolean" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="DeliveryCharges" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserMaster" Relationship="OnlineFoodOrderingSystemModel.FK_Products_UserMaster" FromRole="Food" ToRole="UserMaster" />
+  </EntityType>
+  <Association Name="FK_Products_UserMaster">
+    <End Type="OnlineFoodOrderingSystemModel.UserMaster" Role="UserMaster" Multiplicity="1" />
+    <End Type="OnlineFoodOrderingSystemModel.Food" Role="Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AddtoCart">
+    <Key>
+      <PropertyRef Name="CartID" />
+    </Key>
+    <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DiscountPercent" Type="Int32" />
+    <Property Name="DiscountPrice" Type="Int32" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="DeliveryCharges" Type="Int32" />
+    <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FoodQuantity" Type="Int32" />
+    <Property Name="TotalCharges" Type="Int32" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="UserMaster" Relationship="OnlineFoodOrderingSystemModel.FK_AddtoCart_UserMaster" FromRole="AddtoCart" ToRole="UserMaster" />
+    <Property Name="OrderQuantity" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AddtoCart_UserMaster">
+    <End Type="OnlineFoodOrderingSystemModel.UserMaster" Role="UserMaster" Multiplicity="0..1" />
+    <End Type="OnlineFoodOrderingSystemModel.AddtoCart" Role="AddtoCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AddtoCart">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ContactMessage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SenderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SenderSubject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SenderMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OrderPrice" Type="Int32" />
+    <Property Name="DeliveryCharges" Type="Int32" />
+    <Property Name="OrderImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerEmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PinCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Locality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="COD" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Place" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Packed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Ontheway" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Delivered" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="OrderQuantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+  </EntityType>
+</Schema>

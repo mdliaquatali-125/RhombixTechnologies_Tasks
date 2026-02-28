@@ -1,0 +1,198 @@
+﻿
+@model FoodManagementSystem.Models.FoodModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</title>
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/styles.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/admin-style.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-light bg-clr">
+        <a class="navbar-brand logo-brand" href="/Admin/Index" style="font-size:12px;">𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <ul class="navbar-nav ms-auto mr-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <a class="dropdown-item admin-dropdown-item" href="/Signin/Logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link active" href="/Admin/Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                            Food Item
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProducts" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link sub_nav_link" href="/Admin/AllFood">All Food</a>
+                                <a class="nav-link sub_nav_link" href="/Admin/AddFood">Add Food</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="/Admin/Order">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cart-arrow-down"></i></div>
+                            Orders
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    <h2 class="mt-30 page-title">Food</h2>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card card-static-2 mb-30">
+                                <div class="card-title-2">
+                                    <h4>Add Food</h4>
+                                </div>
+                                <div class="card-body-table">
+                                    <div class="news-content-right pd-20">
+                                        @using (Ajax.BeginForm("AddFood", "Admin",
+                                            new AjaxOptions
+                                            {
+                                                HttpMethod = "POST",
+                                                OnBegin = "OnBeginAjax",
+                                                OnSuccess = "OnSuccessAjax",
+                                                OnFailure = "OnFailureAjax"
+                                            },
+                                            new { enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="form-group">
+                                                <label class="form-label">Name*</label>
+                                                @Html.TextBoxFor(model => model.FoodName, new { placeholder = "Enter Food Name", required = "", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Description*</label>
+                                                @Html.TextAreaFor(model => model.Description, new { placeholder = "Enter Food Description", rows = "5", required = "", @class = "form-control" })
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Price*</label>
+                                                @Html.TextBoxFor(model => model.Price, new { placeholder = "Enter Price", required = "", @class = "form-control" })
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Discount Percent*</label>
+                                                @Html.TextBoxFor(model => model.DiscountPercent, new { placeholder = "Enter Discount Percent", required = "", @class = "form-control" })
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Delivery Charges*</label>
+                                                @Html.TextBoxFor(model => model.DeliveryCharges, new { placeholder = "Enter Delivery Charges", required = "", @class = "form-control" })
+
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="IsAvailable" class="form-label">Is Available*</label>
+                                                @Html.DropDownListFor(model => model.IsAvailable,
+     new SelectList(new[]
+     {
+         new { Value = "true", Text = "Yes" },
+         new { Value = "false", Text = "No" }
+     }, "Value", "Text"),
+     "--Select Is Available--",
+     new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Food Image*</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(model => model.ImageFile, new { type = "file", @class = "form-control custom-file", accept = "image/*" })
+                                                </div>
+                                            </div>
+                                            <button class="save-btn hover-btn" type="submit">Add Food</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-footer mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted-1">© Copyright 2026 Online Food Ordering System . All rights reserved</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/jquery.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Required for Ajax.BeginForm -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/scripts.js"></script>
+    <script>
+        function OnBeginAjax() {
+            Swal.fire({
+                icon: "info",
+                title: "Working on it!",
+                text: "Please wait.",
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+        }
+
+        function OnSuccessAjax(res) {
+            if (res.Status === "Success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Good Job!",
+                    text: res.Message,
+                    showConfirmButton: true
+                }).then(() => { window.location.href = res.URL; });
+            } else if (res.Status === "CatchError") {
+                window.location.href = res.URL;
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: res.Message,
+                    showConfirmButton: true
+                }).then(() => { window.location.href = res.URL; });
+            }
+        }
+
+        function OnFailureAjax(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Failed!",
+                text: res.Message,
+                showConfirmButton: true
+            }).then(() => {
+                if (res.URL && res.URL !== "") { window.location.href = res.URL; }
+            });
+        }
+    </script>
+</body>
+</html>

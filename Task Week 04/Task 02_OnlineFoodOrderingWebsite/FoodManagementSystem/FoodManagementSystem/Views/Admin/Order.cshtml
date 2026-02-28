@@ -1,0 +1,140 @@
+﻿
+@model IEnumerable<FoodManagementSystem.Models.OrderModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</title>
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/styles.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/css/admin-style.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-light bg-clr">
+        <a class="navbar-brand logo-brand" href="/Admin/Index" style="font-size:12px;">𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        <ul class="navbar-nav ms-auto mr-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <a class="dropdown-item admin-dropdown-item" href="/Signin/Logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link active" href="/Admin/Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                            Food Item
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProducts" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link sub_nav_link" href="/Admin/AllFood">All Food</a>
+                                <a class="nav-link sub_nav_link" href="/Admin/AddFood">Add Food</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="/Admin/Order">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cart-arrow-down"></i></div>
+                            Orders
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    <h2 class="mt-30 page-title">Order</h2>
+                    <div class="row justify-content-between">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card card-static-2 mb-30">
+                                <div class="card-title-2 mb-2">
+                                    <h4>All Order</h4>
+                                </div>
+                                <div class="card-body-table">
+                                    <div class="table-responsive">
+                                        <table class="table ucp-table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:130px">Order ID</th>
+                                                    <th>Order Name</th>
+                                                    <th>Price</th>
+                                                    <th>Delivery Charges</th>
+                                                    <th>Order Image</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Email</th>
+                                                    <th>Address</th>
+                                                    <th>Pin Code</th>
+                                                    <th>Locality</th>
+                                                    <th>COD</th>
+                                                    <th>Order Quantity</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>@item.OrderID</td>
+                                                        <td>@item.OrderName</td>
+                                                        <td>@item.OrderPrice</td>
+                                                        <td>@item.DeliveryCharges</td>
+                                                        <td>@item.OrderImage</td>
+                                                        <td>@item.CustomerName</td>
+                                                        <td>@item.CustomerEmailAddress</td>
+                                                        <td>@item.Address</td>
+                                                        <td>@item.PinCode</td>
+                                                        <td>@item.Locality</td>
+                                                        <td>@item.COD</td>
+                                                        <td>@item.OrderQuantity</td>
+                                                        <td class="action-btns">
+                                                            <a href="@Url.Action("OrderReceipt", "Admin", new { orderId = item.OrderID })"
+                                                               class="views-btn">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                            <a href="@Url.Action("EditOrderReceipt", "Admin", new { orderId = item.OrderID })" class="edit-btn"><i class="fas fa-edit"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                 }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-footer mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted-1">© Copyright 2026 Online Food Ordering System . All rights reserved</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/jquery.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/Admin/js/scripts.js"></script>
+
+</body>
+</html>

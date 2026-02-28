@@ -1,0 +1,223 @@
+﻿@model FoodManagementSystem.Models.UsermasterModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</title>
+
+    <!-- Stylesheets -->
+    <link href="../../css2-1?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/unicons-2.0.1/css/unicons.css" rel="stylesheet" />
+    <link href="~/assets/FoodManagementSystemWebsite_assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/FoodManagementSystemWebsite_assets/css/responsive.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/css/night-mode.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+    <!-- SweetAlert CSS -->
+    <link href="~/assets/FoodManagementSystemWebsite_assets/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div class="sign-inup">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="sign-form">
+                        <div class="sign-inner">
+                            <div class="sign-logo" id="logo">
+                                <h1>𝓞𝓷𝓵𝓲𝓷𝓮 𝓕𝓸𝓸𝓭 𝓞𝓻𝓭𝓮𝓻𝓲𝓷𝓰 𝓦𝓮𝓫𝓼𝓲𝓽𝓮</h1>
+                            </div>
+                            <div class="form-dt">
+                                <div class="form-inpts checout-address-step">
+                                    @using (Ajax.BeginForm("Signup", "Signup",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnBegin = "OnBeginAjax",
+                                            OnSuccess = "OnSuccessAjax",
+                                            OnFailure = "OnFailureAjax"
+                                        },
+                                        new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                       
+                                        <div class="form-title"><h6>𝚂𝚒𝚐𝚗 𝚄𝚙</h6></div>
+
+                                        <div class="form-group position-relative mb-3">
+                                            @Html.TextBoxFor(m => m.UserName, new
+                                            {
+                                                @class = "form-control ps-5",
+                                                placeholder = "Full Name",
+                                                required = "required"
+                                            })
+                                            <i class="uil uil-user-circle position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                        </div>
+
+                                        <div class="form-group position-relative mb-3">
+                                            @Html.TextBoxFor(m => m.Email, new
+                                            {
+                                                @class = "form-control ps-5",
+                                                placeholder = "Email Address",
+                                                required = "required",
+                                                type = "email"
+                                            })
+                                            <i class="uil uil-envelope position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                        </div>
+
+                                        <div class="form-group position-relative mb-3">
+                                            @Html.TextBoxFor(m => m.Phone, new
+                                            {
+                                                @class = "form-control ps-5",
+                                                placeholder = "Phone Number",
+                                                required = "required"
+                                            })
+                                            <i class="uil uil-mobile-android-alt position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                        </div>
+
+                                        <div class="form-group position-relative mb-3">
+                                            @Html.PasswordFor(m => m.UserPassword, new
+                                            {
+                                                @class = "form-control ps-5",
+                                                placeholder = "New Password",
+                                                required = "required"
+                                            })
+                                            <i class="uil uil-padlock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                        </div>
+
+                                        <button class="login-btn hover-btn w-100" type="submit">
+                                            Sign Up Now
+                                        </button>
+                                    }
+                                </div>
+                                <div class="signup-link">
+                                    <p>I have an account? - <a href="/Signin/Index">Sign In Now</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <div class="footer-first-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <ul class="call-email-alt">
+                            <li><a href="#" class="callemail"><i class="uil uil-dialpad-alt"></i>111-000-010</a></li>
+                            <li><a href="#" class="callemail"><i class="uil uil-envelope-alt"></i>info@foodmanagementsystem.com</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="social-links-footer">
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-last-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer-bottom-group">
+                            <div class="copyright-text">
+                                <i class="uil uil-copyright"></i>Copyright 2026 <b>Food Management System</b> . All rights reserved
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer End -->
+    <script src="~/assets/FoodManagementSystemWebsite_assets/js/jquery.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/vendor/OwlCarousel/owl.carousel.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/js/jquery.countdown.min.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/js/custom.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/js/offset_overlay.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/js/night-mode.js"></script>
+    <script src="~/assets/FoodManagementSystemWebsite_assets/js/product.thumbnail.slider.js"></script>
+
+    <!-- SweetAlert JS -->
+    <script src="~/assets/FoodManagementSystemWebsite_assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        function OnBeginAjax() {
+            Swal.fire({
+                icon: "info",
+                title: "Working on it!",
+                text: "Please wait.",
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+        }
+
+        function OnSuccessAjax(res) {
+            if (res.Status === "Success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Good Job!",
+                    text: res.Message,
+                    showConfirmButton: true
+                }).then(() => { window.location.href = res.URL; });
+            } else if (res.Status === "CatchError") {
+                window.location.href = res.URL;
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: res.Message,
+                    showConfirmButton: true
+                }).then(() => { window.location.href = res.URL; });
+            }
+        }
+
+        function OnFailureAjax(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Failed!",
+                text: res.Message,
+                showConfirmButton: true
+            }).then(() => {
+                if (res.URL && res.URL !== "") { window.location.href = res.URL; }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OnlineFoodOrderingSystemModelStoreContainer" CdmEntityContainer="OnlineFoodOrderingSystemEntities">
+    <EntitySetMapping Name="ErrorLogMasters">
+      <EntityTypeMapping TypeName="OnlineFoodOrderingSystemModel.ErrorLogMaster">
+        <MappingFragment StoreEntitySet="ErrorLogMaster">
+          <ScalarProperty Name="ErrorID" ColumnName="ErrorID" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorDateTime" ColumnName="ErrorDateTime" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+          <ScalarProperty Name="InnerErrorMessage" ColumnName="InnerErrorMessage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMasters">
+      <EntityTypeMapping TypeName="OnlineFoodOrderingSystemModel.UserMaster">
+        <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+          <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Foods">
+      <EntityTypeMapping TypeName="OnlineFoodOrderingSystemModel.Food">
+        <MappingFragment StoreEntitySet="Food">
+          <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
+          <ScalarProperty Name="StockQuantity" ColumnName="StockQuantity" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="DiscountPercent" ColumnName="DiscountPercent" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+          <ScalarProperty Name="FoodId" ColumnName="FoodId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AddtoCarts">
+      <EntityTypeMapping TypeName="OnlineFoodOrderingSystemModel.AddtoCart">
+        <MappingFragment StoreEntitySet="AddtoCart">
+          <ScalarProperty Name="OrderQuantity" ColumnName="OrderQuantity" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="TotalCharges" ColumnName="TotalCharges" />
+          <ScalarProperty Name="FoodQuantity" ColumnName="FoodQuantity" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
+          <ScalarProperty Name="DiscountPercent" ColumnName="DiscountPercent" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactMessages">
+      <EntityTypeMapping TypeName="OnlineFoodOrderingSystemModel.ContactMessage">
+        <MappingFragment StoreEntitySet="ContactMessages">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="SenderMessage" ColumnName="SenderMessage" />
+          <ScalarProperty Name="SenderSubject" ColumnName="SenderSubject" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="OnlineFoodOrderingSystemModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="OrderQuantity" ColumnName="OrderQuantity" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Delivered" ColumnName="Delivered" />
+          <ScalarProperty Name="Ontheway" ColumnName="Ontheway" />
+          <ScalarProperty Name="Packed" ColumnName="Packed" />
+          <ScalarProperty Name="Place" ColumnName="Place" />
+          <ScalarProperty Name="COD" ColumnName="COD" />
+          <ScalarProperty Name="Locality" ColumnName="Locality" />
+          <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CustomerEmailAddress" ColumnName="CustomerEmailAddress" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="OrderImage" ColumnName="OrderImage" />
+          <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
+          <ScalarProperty Name="OrderPrice" ColumnName="OrderPrice" />
+          <ScalarProperty Name="OrderName" ColumnName="OrderName" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

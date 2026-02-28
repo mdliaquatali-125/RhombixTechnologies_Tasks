@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{64A1E139-12DB-48E5-A5C7-D53B9A2A2CEF}|FoodManagementSystem\\FoodManagementSystem.csproj|g:\\32)rhombix technologies\\online food ordering management system\\foodmanagementsystem\\foodmanagementsystem\\views\\errorlogmaster\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{64A1E139-12DB-48E5-A5C7-D53B9A2A2CEF}|FoodManagementSystem\\FoodManagementSystem.csproj|solutionrelative:foodmanagementsystem\\views\\errorlogmaster\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A1E139-12DB-48E5-A5C7-D53B9A2A2CEF}|FoodManagementSystem\\FoodManagementSystem.csproj|g:\\32)rhombix technologies\\online food ordering management system\\foodmanagementsystem\\foodmanagementsystem\\controllers\\errorlogmastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A1E139-12DB-48E5-A5C7-D53B9A2A2CEF}|FoodManagementSystem\\FoodManagementSystem.csproj|solutionrelative:foodmanagementsystem\\controllers\\errorlogmastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{64A1E139-12DB-48E5-A5C7-D53B9A2A2CEF}|FoodManagementSystem\\FoodManagementSystem.csproj|g:\\32)rhombix technologies\\online food ordering management system\\foodmanagementsystem\\foodmanagementsystem\\models\\errorlogmastermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{64A1E139-12DB-48E5-A5C7-D53B9A2A2CEF}|FoodManagementSystem\\FoodManagementSystem.csproj|solutionrelative:foodmanagementsystem\\models\\errorlogmastermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\FoodManagementSystem\\Views\\ErrorLogMaster\\Index.cshtml",
+              "RelativeDocumentMoniker": "FoodManagementSystem\\Views\\ErrorLogMaster\\Index.cshtml",
+              "ToolTip": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\FoodManagementSystem\\Views\\ErrorLogMaster\\Index.cshtml",
+              "RelativeToolTip": "FoodManagementSystem\\Views\\ErrorLogMaster\\Index.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAFgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-28T14:39:20.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ErrorLogMasterController.cs",
+              "DocumentMoniker": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\FoodManagementSystem\\Controllers\\ErrorLogMasterController.cs",
+              "RelativeDocumentMoniker": "FoodManagementSystem\\Controllers\\ErrorLogMasterController.cs",
+              "ToolTip": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\FoodManagementSystem\\Controllers\\ErrorLogMasterController.cs",
+              "RelativeToolTip": "FoodManagementSystem\\Controllers\\ErrorLogMasterController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T14:39:07.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ErrorLogMasterModel.cs",
+              "DocumentMoniker": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\FoodManagementSystem\\Models\\ErrorLogMasterModel.cs",
+              "RelativeDocumentMoniker": "FoodManagementSystem\\Models\\ErrorLogMasterModel.cs",
+              "ToolTip": "G:\\32)Rhombix Technologies\\Online Food Ordering Management System\\FoodManagementSystem\\FoodManagementSystem\\Models\\ErrorLogMasterModel.cs",
+              "RelativeToolTip": "FoodManagementSystem\\Models\\ErrorLogMasterModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T14:39:03.37Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

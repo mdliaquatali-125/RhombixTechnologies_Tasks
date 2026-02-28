@@ -1,0 +1,371 @@
+﻿
+@{
+    ViewBag.Title = "checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .checkout-card {
+        display: flex;
+        align-items: center; /* vertically center */
+        gap: 10px; /* number aur text ke beech space */
+    }
+
+    .checkout {
+        background-color: #fff;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .wizard-btn {
+        background: transparent;
+        border: 0;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        color: #2b2f4c;
+    }
+
+    .checkout-step-number {
+        border-radius: 50%;
+        border: 1px solid #f55d2c;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        height: 32px;
+        margin-right: 20px;
+        padding: 6px;
+        text-align: center;
+        width: 32px;
+        color: #fff;
+        background: #f55d2c;
+    }
+
+    .checkout-step {
+        border-top: 1px solid #f3f3f3;
+        color: #2b2f4c;
+        font-size: 14px;
+        padding: 30px;
+        position: relative;
+    }
+
+    #checkoutCartItems {
+        max-height: 60vh;
+        overflow-y: auto;
+        scrollbar-width: thin; /* Firefox */
+    }
+
+    Delivery Time & Date
+    #checkoutCartItems::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #checkoutCartItems::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+</style>
+
+<!-- SweetAlert CSS -->
+<link href="~/assets/FoodManagementSystemWebsite_assets/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
+
+<!-- Body Start -->
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Home</li>
+                            <li class="breadcrumb-item">Food</li>
+                            <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-product-grid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-7 card">
+                    <div id="" class="checkout accordion left-chck145">
+                        <div class="checkout-step">
+                            <div class="checkout-card" id="headingTwo">
+                                <span class="checkout-step-number">1</span>
+                                <h4 class="checkout-step-title">
+                                    <button class="wizard-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Delivery Address</button>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#checkout_wizard">
+                                <div class="checkout-step-body mt-3">
+                                    <div class="checout-address-step">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <form class="">
+                                                    <div class="address-fieldset">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-12">
+                                                                <div class="form-group mt-30">
+                                                                    <label class="control-label">Name*</label>
+                                                                    <input id="Customername" name="name" type="text" placeholder="Name" class="form-control input-md" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-12">
+                                                                <div class="form-group mt-30">
+                                                                    <label class="control-label">Email Address*</label>
+                                                                    <input id="Customeremail" name="email" type="text" placeholder="Email Address" class="form-control input-md" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12">
+                                                                <div class="form-group mt-30">
+                                                                    <label class="control-label">Flat / House / Office No.*</label>
+                                                                    <input id="Customerflat" name="flat" type="text" placeholder="Address" class="form-control input-md" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-12">
+                                                                <div class="form-group mt-30">
+                                                                    <label class="control-label">Pincode*</label>
+                                                                    <input id="Customerpincode" name="pincode" type="text" placeholder="Pincode" class="form-control input-md" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-12">
+                                                                <div class="form-group mt-30">
+                                                                    <label class="control-label">Locality*</label>
+                                                                    <input id="CustomerLocality" name="locality" type="text" placeholder="Enter City" class="form-control input-md" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12">
+                                                                <div class="form-group mt-30">
+                                                                    <div class="address-btns">
+                                                                        <a class="collapsed ms-auto next-btn16 hover-btn" role="button" data-bs-toggle="collapse" data-bs-parent="#checkout_wizard" href="#collapseFour"> Next </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout-step">
+                            <div class="checkout-card" id="headingFour">
+                                <span class="checkout-step-number">2</span>
+                                <h4 class="checkout-step-title">
+                                    <button class="wizard-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Payment</button>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#checkout_wizard">
+                                <div class="checkout-step-body mt-3">
+                                    <div class="payment_method-checkout">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="rpt100">
+                                                    <ul class="radio--group-inline-container_1">
+                                                        <li>
+                                                            <div class="radio-item_1">
+                                                                <input id="Customercashondelivery"
+                                                                       value="cashondelivery"
+                                                                       name="paymentmethod"
+                                                                       type="radio"
+                                                                       checked>
+
+                                                                <label for="Customercashondelivery" class="radio-label_1">
+                                                                    Cash on Delivery
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="form-group return-departure-dts" data-method="cashondelivery" style="display: block;">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="pymnt_title">
+                                                                <h4>Cash on Delivery</h4>
+                                                                <p>Pay conveniently when your order arrives! Simply place your order and pay in cash to the delivery person.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button id="CustomerPlaceOrder" class="next-btn16 hover-btn">Place Order</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="pdpt-bg mt-0">
+                        <div class="pdpt-title">
+                            <h4>Order Summary</h4>
+                        </div>
+                        <div class="right-cart-dt-body" id="checkoutCartItems">
+
+                        </div>
+                        <div class="total-checkout-group">
+                            <div class="cart-total-dil">
+                                <h4>
+                                    Total Delivery Charges
+                                </h4>
+                                <span id="TotalDeliveryCharges">0</span>
+                            </div>
+                            <div class="cart-total-dil pb-3">
+                                <h4>
+                                    Total Item Price
+                                </h4>
+                                <span id="TotalItemPrice">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- SweetAlert JS -->
+<script src="~/assets/FoodManagementSystemWebsite_assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+$(document).ready(function () {
+
+    $.ajax({
+        url: '@Url.Action("GetCheckoutCart", "Food")',
+        type: 'GET',
+        success: function (response) {
+
+            if (response.Status === "Success") {
+
+                var cartItems = response.Data;
+                var container = $("#checkoutCartItems");
+                container.html(""); // clear old
+
+                var TotalItemPrice = 0;
+                var TotalDeliveryCharges = 0;
+
+
+
+                $.each(cartItems, function (i, item) {
+
+                    var price = parseFloat(item.Price);
+                    var discountPrice = parseFloat(item.DiscountPrice || price);
+                    var qty = parseInt(item.FoodQuantity);
+                    var delivery = parseFloat(item.DeliveryCharges || 0);
+
+                    TotalItemPrice += discountPrice * qty;
+                    TotalDeliveryCharges += delivery;
+
+                    var html = `
+                            <div class="cart-item border_radius">
+                                <div class="cart-product-img">
+                                    <img id="ImageUrl" src="${item.ImageUrl}" alt="">
+                                    <div id="DiscountPercent" class="offer-badge">${item.DiscountPercent || 0}% OFF</div>
+                                </div>
+                                <div class="cart-text">
+                                    <h4 id="FoodName" >${item.FoodName}</h4>
+
+                                    <div class="cart-item-price">
+                                       <p id="DiscountPrice"> Rs ${discountPrice} </p>
+                                        <span id="Price" >Rs ${price}</span>
+                                    </div>
+
+                                    <div class="mt-1">
+                                        <small id="DeliveryCharges"><strong>Delivery Charges:</strong> Rs ${delivery}</small>
+                                    </div>
+
+                                    <div class="mt-1">
+                                        <small id="Quantity" ><strong>Quantity:</strong> ${qty}</small>
+                                    </div>
+
+                                </div>
+                            </div>
+                           `;
+
+                    container.append(html);
+                });
+                $("#TotalItemPrice").text("Rs " + TotalItemPrice);
+                $("#TotalDeliveryCharges").text("Rs " + TotalDeliveryCharges);
+            }
+        }
+    });
+
+$("#CustomerPlaceOrder").click(function (e) {
+    e.preventDefault();
+
+    // Customer data
+    var customerData = {
+        CustomerName: $("#Customername").val(),
+        CustomerEmailAddress: $("#Customeremail").val(),
+        Address: $("#Customerflat").val(),
+        PinCode: $("#Customerpincode").val(),
+        Locality: $("#CustomerLocality").val(),
+        COD:$("input[name='paymentmethod']:checked").val()
+    };
+
+    // Build all items
+    var allOrders = [];
+
+    $("#checkoutCartItems .cart-item").each(function () {
+        var item = {
+            CustomerName: customerData.CustomerName,
+            CustomerEmailAddress: customerData.CustomerEmailAddress,
+            Address: customerData.Address,
+            PinCode: customerData.PinCode,
+            Locality: customerData.Locality,
+            COD: customerData.COD,
+
+            FoodName: $(this).find("h4").text(),
+            ImageUrl: $(this).find("img").attr("src"),
+            DiscountPrice: parseFloat($(this).find(".cart-item-price p").text().replace("Rs", "").trim()),
+            Price: parseFloat($(this).find(".cart-item-price span").text().replace("Rs", "").trim()),
+            DeliveryCharges: parseFloat($(this).find("small:eq(0)").text().replace("Delivery Charges:", "").replace("Rs", "").trim()),
+            Quantity: parseInt($(this).find("small:eq(1)").text().replace("Quantity:", "").trim())
+        };
+
+        allOrders.push(item); // Push each item
+    });
+
+    // Send all items in one request
+    $.ajax({
+        url: '@Url.Action("Order", "Food")',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(allOrders), // send array of orders
+        success: function (response) {
+            if (response.Status == "Success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Good Job!",
+                    text: "Order has been Successfully Ordered",
+                    showConfirmButton: true
+                }).then(() => { window.location.href = "/Food/checkout"; });
+            }
+            else if (response.Status == "NoItemintheCart") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Warning!",
+                    text: "Please add to cart item first.",
+                    showConfirmButton: true
+                }).then(() => { window.location.href = "/Food/NewFood"; });
+            }
+            else {
+                alert(response.message || "Something went wrong");
+            }
+        }
+    });
+});
+
+});
+</script>
